@@ -1,0 +1,44 @@
+footer{
+    
+    position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color:lightblue;
+   color: white;
+   text-align: cent
+}
+// .card :hover{
+//     // transform: scale(1.1);
+//     box-shadow: 0 6px 8px 0 rgba(22, 22, 26, 0.18);
+
+// }
+// .card{
+//     transition: transform 0.2s ease;
+//     border: 0;
+// }
+.card{
+    padding: 20px;
+    margin: 25px;
+}
+
+.card img:hover{
+    transition: 0.3s ease-in-out;
+    transform: scale(1.1);
+}
+#ip2{
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+     border-radius: 20px;
+     border: 1px solid #2d9fd9;
+     color: #a0d18c;
+     width: 350px;
+     height: 50px;
+     padding-left: 10px;
+    }
+    
+#ip2:focus {
+     outline: none;
+     border: 1px solid #a0d18c;
+     color: #2d9fd9;
+}

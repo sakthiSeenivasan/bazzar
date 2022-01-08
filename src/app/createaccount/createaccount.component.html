@@ -1,0 +1,39 @@
+<div class="container">
+<div class="mx-auto" style="width: 200px;">
+
+        <div class="row">
+            <div class="col-md-3">
+                <br>
+                <img src="./assets/img/ajj.jpeg">
+
+            </div>
+        </div>
+            <br>
+            <br>
+            <form [formGroup]="siginForm">
+                <div>
+                    <div class="mr-4">
+                        
+                        <input type="firstname" id="ip2" formControlName="firstName" class="form-control" [class.is-invalid]="siginForm.controls.firstName.value" placeholder="firstName" >
+                        <span class="valid-feedback">Please Enter first name.</span>
+                    </div>
+                    <br>
+                    
+                    <div class="mb-3">
+                        <input type="lastname" formControlName="lastName" class="form-control" id="ip2" [class.is-invalid]="siginForm.controls.lastName.value" placeholder="lastName" >
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" formControlName="email" id="ip2" class="form-control" [class.is-invalid]="siginForm.controls.email.value" placeholder="email" >
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" formControlName="password" class="form-control" id="ip2" [class.is-invalid]="siginForm.controls.password.value" placeholder="password" >
+                    </div>
+                </div>
+           
+                    <button class="btn btn-primary"  [disabled]="siginForm.invalid" id="ip2" (click)="gotoJumbo()">SIGNUP</button>
+                
+            </form>
+            <br>
+            <h6>Have an Account?  <a  href="Jumbo" >   SIGN IN</a></h6>
+        </div>
+    </div>
