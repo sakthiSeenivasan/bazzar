@@ -13,56 +13,69 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent implements OnInit {
+  editProductForm: FormGroup;
   productForm: FormGroup;
-  productionForm: FormGroup;
-  employeeDetails$: Observable<any[]> | undefined;
-  constructor(private fs: FirestoreService, private router:Router) {
+  employeeDetails$!: Observable<any[]>;
+  editingProduct: any;
+  errorMsg: any;
+  constructor(private fs: FirestoreService, private router: Router) {
     this.productForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      color: new FormControl('', Validators.required),
-      price: new FormControl('', Validators.required)
+      name: new FormControl(''),
+      color: new FormControl(''),
+      price: new FormControl('')
     }
     )
-    this.productionForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      adress: new FormControl('', Validators.required),
+    this.editProductForm = new FormGroup({
+      name: new FormControl(''),
+      color: new FormControl(''),
+      price: new FormControl(''),
     })
   }
-
-  ngOnInit() : void {
-    this.employeeDetails$ = this.fs.col$(`Product/CDCbT7sQbdJZhCFXk59S/124563`);
+  ngOnInit(): void {
+    this.employeeDetails$ = this.fs.col$(`Product`);
   }
   async addProducts() {
     if (this.productForm.valid) {
-
+      this.errorMsg = {
+        color: 'success',
+        txt: 'Adding Products'
+      }
       await this.fs.add(`Product`, {
         name: this.productForm.value.name,
         color: this.productForm.value.color,
         price: this.productForm.value.price
-
       });
+      this.errorMsg = null;
     }
   }
-    send(){
-        this.fs.col("product").doc("uRtGX8Wk5Pa5LyfXXqZ5").update({
-          name: this.productForm.value.name,
-          email: this.productForm.value.age,
-          address: this.productForm.value.address,
-        });
-    }
-   
-    // addUser(){
-    //     $('#exampleInput').modal('show');
-    //   }
-    // exampleInput.show()
-  
+  editProductModal(detail: any) {
+    $('#exampleInput').modal('show');
+    this.editingProduct = detail;
+    console.log(detail);
+    this.editProductForm.patchValue({
+      name: detail.name,
+      color: detail.color,
+      price: detail.price
+    });
+  }
+  async saveProduct() {
+    await this.fs.update(this.editingProduct.ref.path, {
+      name: this.editProductForm.controls.name.value,
+      color: this.editProductForm.controls.color.value,
+      price: this.editProductForm.controls.price.value,
+    });
+    $('#exampleInput').modal('hide');
+    console.log("hello");
+  }
+ async deleteProduct() {
+  await  this.fs.delete(this.editingProduct.ref.path)
+ }
+
   click() {
-    let triggerElement =new bootstrap.Popover(<any>document.getElementById('button')) ;
+    let triggerElement = new bootstrap.Popover(<any>document.getElementById('button'));
     triggerElement.show()
-  
   }
-  gotoJumbo(){
-    this.router.navigate(['/Jumbo'])
-  }
+  // gotoJumbo(){
+  //   this.router.navigate(['/Jumbo'])
+  // }
 }

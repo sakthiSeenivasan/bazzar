@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { EmailValidator, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CartService } from '../services/cart.service';
+
 import { FirestoreService } from '../services/firestore.service';
 
 
@@ -13,33 +13,58 @@ import { FirestoreService } from '../services/firestore.service';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-  loginForm:FormGroup;
-  
-  constructor(private router:Router, private cart:CartService, private fs:FirestoreService) { 
+  loginForm: FormGroup;
+  employeeDetails$!: Observable<any[]>;
+  editingProduct: any;
+  params: any;
+  userEmail: any;
+  constructor(private router: Router, private fs: FirestoreService, private route: ActivatedRoute) {
     this.loginForm = new FormGroup({
-      firstname:new FormControl('',Validators.required),
-      lastname:new FormControl('',Validators.required),
-      email: new FormControl('',Validators.email),
-      phoneno: new FormControl('',Validators.email),
-      address: new FormControl('',Validators.email),
-      city: new FormControl('',Validators.email),
-      state: new FormControl('',Validators.email),
-    
+      firstname: new FormControl('', Validators.required),
+      lastname: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.email),
+      phoneno: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+
     })
   }
 
-  ngOnInit(): void {
-   
+  ngOnInit() {
+    this.employeeDetails$ = this.fs.col$(`Login`);
+    this.route.params.subscribe(params => {
+      this.userEmail = params['email'];
+      this.userEmail = params['firstname'];
+      this.userEmail = params['lastname'];
 
+
+      this.loginForm.patchValue({
+        email: this.userEmail,
+        firstname:this.userEmail,
+        lastname:this.userEmail
+      });
+    })
+    
   }
-  gotoJumbo(){
-    this.router.navigate(['/Jumbo'])
-  }   
 
-addUser() {
-  $('#addModal').modal('show');
-}
-gotoSetting(){
-  this.router.navigate(['/setting'])
-}
+  // async saveProduct() {
+  //   await this.fs.update(this.editingProduct.ref.path, {
+  //     email: this.loginForm.controls.email.value,
+
+
+  //   });
+
+  // }
+
+  gotoJumbo() {
+    this.router.navigate(['/Jumbo'])
+  }
+
+  addUser() {
+    $('#addModal').modal('show');
+  }
+  gotoSetting() {
+    this.router.navigate(['/setting'])
+  }
 }

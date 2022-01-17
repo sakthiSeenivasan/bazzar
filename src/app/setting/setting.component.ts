@@ -24,4 +24,13 @@ gotoHelp(){
 gotoSign(){
   this.router.navigate(['/Jumbo'])
 }
+gotoProduct(){
+  this.router.navigate(['/product'])
+}
+gotoExplore(){
+  this.router.navigate(['/product'])
+}
+gotoJumbo(){
+  this.router.navigate(['/Jumbo'])
+}
 }

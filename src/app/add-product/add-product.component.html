@@ -4,51 +4,65 @@
             <form [formGroup]="productForm">
                 <div class="form-group">
                     <label for="productName">Name</label>
-                    <input type="text" class="form-control" formControlName="name"
-                        [class.is-invalid]="productForm.controls.name.invalid" placeholder="Enter Your Name">
+                    <input type="text" class="form-control" formControlName="name">
                 </div>
                 <div class="form-group">
                     <label for="color">color</label>
-                    <input type="text" class="form-control" formControlName="color"
-                        [class.is-invalid]="productForm.controls.color.invalid" placeholder="Enter Your Color">
+                    <input type="text" class="form-control" formControlName="color">
                 </div>
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="text" class="form-control" formControlName="price"
-                    [class.is-invalid]="productForm.controls.price.invalid" placeholder="Enter Your Price">
+                    <input type="text" class="form-control" formControlName="price">
                 </div>
-                <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid" data-bs-toggle="popover"
-                data-bs-placement="bottom" data-bs-title="Show the firebase" (click)="addProducts()"
-                data-bs-placement="top" title="Please Added" data-bs-toggle="modal"
-                data-bs-target="#exampleInput">Add Products</button>
-                <button type="button" class="btn btn-secondary" (click)="gotoJumbo()">Login</button>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary w-100" 
+                        data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="Show the firebase"
+                        (click)="addProducts()" data-bs-placement="top" title="Please Added" data-bs-toggle="modal">Add
+                        Products</button>
+                </div>
+                <div class="mt-2 text-center">
+                    <p [ngClass]="'text-'+ errorMsg?.color">{{errorMsg?.txt}}</p>
+                </div>
+                <!-- <button type="button" class="btn btn-secondary" (click)="gotoJumbo()">Login</button> -->
                 <!-- <button id="button" class="btn btn-lg btn-danger" data-bs-toggle="popover"(click)="click()" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button> -->
-
             </form>
         </div>
     </div>
 </div>
 <br>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
+<!--firebase-->
+<div class="container">
+    <table class="table table-responsive border w-75 " *ngIf="employeeDetails$ | async as employeeDetails;">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Color</th>
+                <th scope="col">Price</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let detail of employeeDetails;let i=index">
+                <th scope="row">{{i+1}}</th>
+                <td>{{detail.name}}</td>
+                <td>{{detail.color}}</td>
+                <td>{{detail.price}}</td>
+                <td>
+                    <button class="btn btn-dark m-1" (click)="editProductModal(detail)">Edit</button>
+                    <!-- <button class="btn btn-danger" (click)="deleteProduct()">Delete</button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-        </tr>
-    </thead>
-    <tbody *ngFor="let detail of employeeDetails$ | async; let i=index">
-        <tr>
-            <th scope="row">{{i+1}}</th>
-            <td>{{detail.name}}</td>
-            <td>{{detail.mobileNo}}</td>
 
-        </tr>
 
-    </tbody>
-</table>
-<br>
+
+
+
+<!--ProductModal-->
 <div class="modal" tabindex="-1" id="exampleInput">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -57,25 +71,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="productionForm">
-                    <div class="col-md-6">
-                        <label for="exampleInputPassword1" class="form-label">Name</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                <form [formGroup]="editProductForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" formControlName="name" class="form-control">
                     </div>
-                    <div class="col-md-6">
-                        <label for="exampleInputEmail1" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <div class="form-group">
+                        <label for="color" class="form-label">Color</label>
+                        <input type="text" class="form-control" formControlName="color">
                     </div>
-                    <div class="col-md-6">
-                        <label for="exampleInputPassword1" class="form-label">address</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    <div class="form-group">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" class="form-control" formControlName="price">
                     </div>
-
-    
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="button" class="btn btn-primary" data-bs-toggle="popover" (click)="click()"
-                    (click)="send()" title="saved Database" data-bs-content="checked the database">Save changes</button>
-            </div>
-   
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="button" class="btn btn-primary" data-bs-toggle="popover"
+                            (click)="saveProduct()" title="Click Updated" data-bs-content="checked the database">Save
+                            changes</button>
+                    </div>
