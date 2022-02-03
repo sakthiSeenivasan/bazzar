@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit {
     }));
   }
   ngOnInit() {
-    console.log('master');
+    console.log('Hello World');
   }
   viewProduct(product: any) {
     this.viewProducts = product;
