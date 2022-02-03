@@ -63,14 +63,14 @@ export class ProductComponent implements OnInit {
       wishlist: Wishlist.Like
     })
     this.wishlist.hide();
-    // window.location.reload();
+    window.location.reload();
   }
   async addingDislikes() {
     await this.fs.update(`Product/${this.viewWishlist._id}`, {
       wishlist: Wishlist.DisLike
     })
     this.wishlist.hide();
-    // window.location.reload();
+    window.location.reload();
   }
   gotoCart() {
     this.router.navigate(['/cart'])

@@ -7,7 +7,7 @@
             </div>
             <div class="col">
                 <img src="../../assets/svg/cart.svg" class=" position-relative" alt="" (click)="gotoCart()">
-                <span class="badge bg-danger  translate-middle p-1  position-absolute top-4">{{count}}</span>
+                <span class="badge bg-danger  translate-middle p-1  position-absolute top-4"></span>
             </div>
         </div>
     </div>
@@ -32,17 +32,19 @@
                                 <button class="btn d-flex" style="margin-left: auto;">
                                     <span>
                                         <img src="../../assets/svg/hand-thumbs-up.svg"
-                                            *ngIf="product?.wishlist != 'Liked' && product?.wishlist != 'DisLiked'" alt=""
-                                            (click)="addToWishlist(product)">
+                                            *ngIf="product?.wishlist != 'Liked' && product?.wishlist != 'DisLiked'"
+                                            alt="" (click)="addToWishlist(product)">
                                     </span>
 
                                     <span>
                                         <img src="../../assets/svg/hand-thumbs-up-fill.svg"
-                                            *ngIf="product?.wishlist == 'Liked'" alt=""  (click)="addToWishlist(product)">
+                                            *ngIf="product?.wishlist == 'Liked'" alt=""
+                                            (click)="addToWishlist(product)">
                                     </span>
                                     <span>
                                         <img src="../../assets/svg/hand-thumbs-down-fill.svg"
-                                            *ngIf="product?.wishlist == 'DisLiked'" alt=""  (click)="addToWishlist(product)">
+                                            *ngIf="product?.wishlist == 'DisLiked'" alt=""
+                                            (click)="addToWishlist(product)">
                                     </span>
                                 </button>
                             </div>
@@ -60,7 +62,6 @@
                                     </span>
                                 </button>
                             </div> -->
-
                         </div>
                     </div>
                 </div>
@@ -114,8 +115,10 @@
                 Are you sure want to like or dislike this product?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addingDislikes()" [disabled]="viewWishlist?.wishlist == 'DisLiked'">Dislike</button>
-                <button type="button" class="btn btn-primary"  (click)="addingLikes()" [disabled]="viewWishlist?.wishlist == 'Liked'">Like</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addingDislikes()"
+                    [disabled]="viewWishlist?.wishlist == 'DisLiked'">Dislike</button>
+                <button type="button" class="btn btn-primary" (click)="addingLikes()"
+                    [disabled]="viewWishlist?.wishlist == 'Liked'">Like</button>
             </div>
         </div>
     </div>
