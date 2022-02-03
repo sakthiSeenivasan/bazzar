@@ -14,17 +14,19 @@
                     <label for="price">Price</label>
                     <input type="text" class="form-control" formControlName="price">
                 </div>
+                <div class="form-group">
+                    <label for="price">description</label>
+                    <input type="text" class="form-control" formControlName="description">
+                </div>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-primary w-100" 
-                        data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="Show the firebase"
-                        (click)="addProducts()" data-bs-placement="top" title="Please Added" data-bs-toggle="modal">Add
+                    <button type="submit" class="btn btn-primary w-100" data-bs-toggle="popover"
+                        data-bs-placement="bottom" data-bs-title="Show the firebase" (click)="addProducts()"
+                        data-bs-placement="top" title="Please Added" data-bs-toggle="modal">Add
                         Products</button>
                 </div>
                 <div class="mt-2 text-center">
                     <p [ngClass]="'text-'+ errorMsg?.color">{{errorMsg?.txt}}</p>
                 </div>
-                <!-- <button type="button" class="btn btn-secondary" (click)="gotoJumbo()">Login</button> -->
-                <!-- <button id="button" class="btn btn-lg btn-danger" data-bs-toggle="popover"(click)="click()" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button> -->
             </form>
         </div>
     </div>
@@ -32,46 +34,50 @@
 <br>
 <!--firebase-->
 <div class="container">
-    <table class="table table-responsive border w-75 " *ngIf="employeeDetails$ | async as employeeDetails;">
+    <table class="table table-responsive border table-sm" *ngIf="employeeDetails$ | async as employeeDetails;">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Color</th>
                 <th scope="col">Price</th>
+                <th scope="col">description</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let detail of employeeDetails;let i=index">
-                <th scope="row">{{i+1}}</th>
+                <td>{{i+1}}</td>
                 <td>{{detail.name}}</td>
                 <td>{{detail.color}}</td>
                 <td>{{detail.price}}</td>
+                <td class="w-50">{{detail.description}}</td>
                 <td>
-                    <button class="btn btn-dark m-1" (click)="editProductModal(detail)">Edit</button>
-                    <!-- <button class="btn btn-danger" (click)="deleteProduct()">Delete</button> -->
+                    <button class="btn btn-dark m-2" (click)="editProductModal(detail)">Edit</button>
+                    <button class="btn btn-danger" (click)="deleteProduct(detail)">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
-
-
-
-
-
-
 <!--ProductModal-->
-<div class="modal" tabindex="-1" id="exampleInput">
+<div class="modal fade" id="exampleInput" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Product</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="editProductForm">
+                    <div class="text-center  mt-1">
+
+                        <img [src]="editingProduct?.imageUrl || defaultImage" class="border rounded-3"
+                            (click)="image.click()" width="250px" height="250px">
+                        <input type='file' #image accept="image/*" (change)="uploadImage($event)" hidden />
+
+                    </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" formControlName="name" class="form-control">
@@ -84,9 +90,44 @@
                         <label for="price" class="form-label">Price</label>
                         <input type="text" class="form-control" formControlName="price">
                     </div>
+                    <div class="form-group">
+                        <label for="description" class="form-label">description</label>
+                        <input type="text" class="form-control" formControlName="description">
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
                         <button type="button" id="button" class="btn btn-primary" data-bs-toggle="popover"
-                            (click)="saveProduct()" title="Click Updated" data-bs-content="checked the database">Save
-                            changes</button>
+                            (click)="saveProduct()" title="Click Updated" data-bs-content="checked the database">
+                            <div class="spinner-border spinner-border-sm" role="status" *ngIf="savingProduct">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            Save changes
+                        </button>
                     </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="deleteProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to delete this product?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="delete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

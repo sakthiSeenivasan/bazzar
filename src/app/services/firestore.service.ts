@@ -304,3 +304,7 @@ return this.doc(host).update({ [key]: this.doc(doc).ref });
 }
 /// returns a documents references mapped to AngularFirestoreDocument
 }
+
+
+
+

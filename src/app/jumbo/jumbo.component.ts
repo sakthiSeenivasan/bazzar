@@ -15,7 +15,7 @@ loginForm:FormGroup;
   constructor(private router:Router, private fb:AngularFirestore, private fs:FirestoreService) {
     this.loginForm = new FormGroup({
       email: new FormControl('',Validators.required),
-      password: new FormControl('null', Validators.required),
+      password: new FormControl('', Validators.required),
     })
    }
   ngOnInit(): void {
@@ -31,7 +31,7 @@ loginForm:FormGroup;
   }
  gotoProduct(){
   const email = this.loginForm.value.email;
-   this.router.navigate(['/product' ,email])
+   this.router.navigate(['/product' ,email ])
  }
  gotoCreate(){
    this.router.navigate(['/createaccount'])

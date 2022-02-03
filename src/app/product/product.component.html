@@ -1,190 +1,122 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-info">
-        <h3 class="text-light"><b>Explore</b></h3>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"></a>
-                </li>
-            </ul>
-        </div>
-        <p class="text-light"><b>cart</b><img src="./assets/img/cart3.svg" class="text-light" class="ml-2">
-            <img src="../../assets/svg/person.svg" class="w-25" (click)="addUser()">
-        </p>
-    </nav>
-</header>
-<div class="row">
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="./assets/img/cake.jpg" class="card-img-top" alt="cake">Cakes<br><span
-                        class="badge bg-danger">Cakes</span>
-                </h5>
-                <p class="card-text">Cakes is the natural taste.</p>
-                <p><b>{{150 | currency: 'INR'}}
-                        <img src="./assets/img/cart3.svg" class="text-warning">
-                    </b></p>
+<nav class="navbar navbar-light bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white">Explore</a>
+        <div class="row">
+            <div class="col">
+                <img src="../../assets/svg/heart-fill.svg" alt="" (click)="gotoWishlist()">
+            </div>
+            <div class="col">
+                <img src="../../assets/svg/cart.svg" class=" position-relative" alt="" (click)="gotoCart()">
+                <span class="badge bg-danger  translate-middle p-1  position-absolute top-4">{{count}}</span>
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="./assets/img/icecream6.jpg" class="card-img-top" alt="icecream">Ice Cream<br><span
-                        class="badge bg-danger">Ice Cream</span>
-                </h5>
-                <p class="card-text">Ice Cream is the natural taste.</p>
-                <p><b>{{25 | currency: 'INR'}}
-                        <img src="./assets/img/cart3.svg" class="text-warning">
-                    </b></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="./assets/img/pepsi.jpg" class="card-img-top" alt="pepsi">Pepsi<br><span
-                        class="badge bg-danger">Pepsi</span>
-                </h5>
-                <p class="card-text">pepsi is the natural taste.</p>
-                <p><b>{{50 | currency: 'INR'}}Jumbo
-                        <img src="./assets/img/cart3.svg" class="text-warning">
-                    </b></p>
-            </div>
-        </div>
-    </div>
-</div>
+</nav>
+<div class="container">
+    <div class="row mt-3" *ngIf="products$ | async as products">
+        <div class="col-4" *ngFor="let product of products">
+            <div class="card border-2">
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <img [src]="product.imageUrl" style="object-fit: contain; height: 300px;"
+                            (click)="viewProduct(product)"><br>
+                    </div>
+                    <div class="card-text mt-2 p-3">
+                        <div class="row">
+                            <div class="col-10">
+                                <p class="fw-normal"> Name: {{product.name}}</p>
+                                <p class="fw-normal">Color: {{product.color}}</p>
+                                <p class="fw-normal">Price: {{product.price}}</p>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn d-flex" style="margin-left: auto;">
+                                    <span>
+                                        <img src="../../assets/svg/hand-thumbs-up.svg"
+                                            *ngIf="product?.wishlist != 'Liked' && product?.wishlist != 'DisLiked'" alt=""
+                                            (click)="addToWishlist(product)">
+                                    </span>
 
+                                    <span>
+                                        <img src="../../assets/svg/hand-thumbs-up-fill.svg"
+                                            *ngIf="product?.wishlist == 'Liked'" alt=""  (click)="addToWishlist(product)">
+                                    </span>
+                                    <span>
+                                        <img src="../../assets/svg/hand-thumbs-down-fill.svg"
+                                            *ngIf="product?.wishlist == 'DisLiked'" alt=""  (click)="addToWishlist(product)">
+                                    </span>
+                                </button>
+                            </div>
+                            <!-- <div class="col-2">
+                                <button class="btn ">
+                                    <span>
+                                        <img src="../../assets/svg/hand-thumbs-down.svg"
+                                            *ngIf="product?.wishlist != 'Liked'" alt=""
+                                            (click)="addToWishlist(product)">
+                                    </span>
 
-<div class="row">
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="./assets/img/blackforest.jpg" class="card-img-top" alt="blackforest">blackforest<br><span
-                        class="badge bg-danger">blackforest</span>
-                </h5>
-                <p class="card-text">BlackForestCakes is the natural taste.</p>
-                <p><b>{{400 | currency: 'INR'}}
-                        <img src="./assets/img/cart3.svg" class="text-warning">
-                    </b></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="./assets/img/vegfinger.jpg" class="card-img-top" alt="vegfinger">Veg Finger<br><span
-                        class="badge bg-danger">Veg Finger</span>
-                </h5>
-                <p class="card-text">Veg Fingers is the natural taste.</p>
-                <p><b>{{67 | currency: 'INR'}}
-                        <img src="./assets/img/cart3.svg" class="text-warning">
-                    </b></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="./assets/img/butterscotch.jpg" class="card-img-top"
-                        alt="butterscotch">ButterScotch<br><span class="badge bg-danger">ButterScotch</span>
-                </h5>
-                <p class="card-text">ButterScotch is the natural taste.</p>
-                <p><b>{{120 | currency: 'INR'}}
-                        <img src="./assets/img/cart3.svg" class="text-warning">
-                    </b></p>
+                                    <span>
+                                        <img src="../../assets/svg/hand-thumbs-down-fill.svg"
+                                            *ngIf="product?.wishlist == 'Liked'" alt="">
+                                    </span>
+                                </button>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-<footer class="bg-light text-center">
-    <table class="table">
-        <!-- <th scope="col">First</th> -->
-        <th scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
-            <img src="../../assets/svg/house-door-fill.svg">
-            Explore
-        </th>
-        <th scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="clipboard">
-            <img src="../../assets/svg/clipboard.svg">
-            Order
-        </th>
-        <th scope="col" (click)="gotoSetting()" data-bs-toggle="tooltip" data-bs-placement="top" title="Settings">
-            <img src="../../assets/svg/gear-fill.svg">
-            Settings
-        </th>
-        <!-- <th scope="col-mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Home"> <img src="../../assets/svg/house-door-fill.svg">
-            Home</th> -->
-    </table>
-
-</footer>
-
-
-
-
-<div class="modal" tabindex="-1" id="addModal" data-bs-backdrop="static">
-    <div class="modal-dialog">
+<div class="modal fade" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Profile</h5>
+                <h5 class="modal-title">{{viewProducts?.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="hideEnableCart()"></button>
+            </div>
+            <div class="modal-body ">
+                <div class="text-center">
+                    <img [src]="viewProducts?.imageUrl" style="object-fit: cover; width: 300px; height: 300px;">
+                    <hr>
+                </div>
+                <span class="badge bg-danger">{{viewProducts?.name}}</span>
+                <p>{{viewProducts?.description}}</p>
+                <button class="btn btn-sm btn-warning mt-2 w-100" (click)="addtoCart()">{{viewProducts?.status === 'In
+                    Cart' ? 'Cart Added':'Add Cart' }}</button>
+                <span *ngIf="addedCart" class="text-danger ">{{addedCart}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="modal fade" id="cart" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+      Like
+        </div>
+    </div>
+</div> -->
+<div class="modal fade" id="viewCart" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Like & Dislike</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="d-flex justify-content-center">
-                    <img src="../../assets/svg/person.svg" class="w-25" (click)="addUser()">
-                </div>
-                <br>
-                <br>
-                <div class="d-flex justify-content-center">
-                    <form [formGroup]="loginForm">
-                        <input type="firstname" formControlName="firstname" id="ip2" class="form-control" value="userEmail"
-                            [class.is-invalid]="!loginForm.controls.firstname.value" placeholder="First Name">
-                        <span class="invalid-feedback">Please Enter First Name</span>
-                        <br>
-                        <input type="lastname" formControlName="lastname" id="ip2" class="form-control" value="userEmail"
-                            placeholder="Last Name">
-                        <br>
-                        <span>
-
-                            <input type="email" formControlName="email" value="userEmail" id="ip2" class="form-control"
-                                placeholder="Email">
-                        </span>
-
-                        <br>
-
-                        <input type="phoneno" formControlName="phoneno" id="ip2" class="form-control"
-                            placeholder="Phone Number">
-                        <br>
-                        <input type="address" formControlName="address" id="ip2" class="form-control"
-                            placeholder="address">
-                        <br>
-                        <input type="city" formControlName="city" id="ip2" class="form-control" placeholder="City">
-                        <br>
-                        <input type="state" formControlName="state" id="ip2" class="form-control" placeholder="State">
-                        <br>
-                        <button class="btn btn-primary" [disabled]="loginForm.invalid" id="ip2">SAVE PROFILE</button>
-                    </form>
-                </div>
+                Are you sure want to like or dislike this product?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addingDislikes()" [disabled]="viewWishlist?.wishlist == 'DisLiked'">Dislike</button>
+                <button type="button" class="btn btn-primary"  (click)="addingLikes()" [disabled]="viewWishlist?.wishlist == 'Liked'">Like</button>
             </div>
         </div>
     </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button class="btn">
+                <img src="../../assets/svg/chevron-left.svg" (click)="gotoProduct()" alt="">
+            </button>
+        </div>
+        <div class="col text-end">
+            <button class="btn" (click)="gotoOrder()">
+                <img src="../../assets/svg/chevron-right.svg" alt="">
+            </button>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="cart$ | async as carts">
+        <div class="col-4" *ngFor="let cart of carts;">
+            <div class="card border-2">
+                <div class="card-body p-5">
+                    <div class="text-center mb-3">
+                        <img class="card-img-top" [src]="cart.imageUrl" style="object-fit: contain; height: 300px;"><br>
+                    </div>
+                    <div class="card-text mt-2 p-2">
+                        <div class="row">
+                            <div class="col">
+                                <p class="fw-normal"> Name: {{cart.name}}</p>
+                                <p class="fw-normal">Color: {{cart.color}}</p>
+                                <p class="fw-normal">Price: {{cart.price}}</p>
+                                <h5 class="fw-normal" style="color: #FF6164;">{{cart.status}}</h5>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-warning text-dark" (click)="deleteCart(cart)">DELETE
+                                <img src="../../assets/svg/trash3.svg" alt="">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="cartCount.length !== 0">
+            <button class="btn btn-warning w-100 mt-2" (click)="addPay()">Pay Now</button>
+        </div>
+        <div *ngIf="cartCount.length === 0" class="text-center">
+            <img src="../../assets/gif/loading.gif" alt="">
+            <h3>No cart found</h3>
+        </div>
+
+    </div>
+</div>

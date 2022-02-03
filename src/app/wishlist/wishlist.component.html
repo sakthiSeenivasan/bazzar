@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row mt-3" *ngIf="wishlist$ | async as wishlists">
+        <div class="col-4" *ngFor="let wishlist of wishlists;">
+            <div class="card border-2">
+                <div class="card-body p-5">
+                    <div class="text-center mb-3">
+                        <img class="card-img-top" [src]="wishlist.imageUrl" style="object-fit: contain; height: 300px;"><br>
+                    </div>
+                    <div class="card-text mt-2 p-2">
+                        <div class="row">
+                            <div class="col">
+                                <p class="fw-normal"> Name: {{wishlist.name}}</p>
+                                <p class="fw-normal">Color: {{wishlist.color}}</p>
+                                <p class="fw-normal">Price: {{wishlist.price}}</p>
+                                <h5 class="fw-normal" style="color: #F23005;">{{wishlist.wishlist}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

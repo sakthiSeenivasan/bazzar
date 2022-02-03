@@ -14,7 +14,7 @@ export class CreateaccountComponent implements OnInit {
     this.loginForm = new FormGroup({
       firstname: new FormControl('', Validators.required),
       lastname: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.email),
+      email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     })
   }
@@ -30,10 +30,12 @@ export class CreateaccountComponent implements OnInit {
     }
   }
  gotoProfile(){
-  const email = this.loginForm.value.email;
-   this.router.navigate(['/product' ,email])
+   const firstname = this.loginForm.value.firstname;
+   const lastname = this.loginForm.value.lastname;
+   const email = this.loginForm.value.email;
+   this.router.navigate(['/Jumbo' , firstname, lastname,email])
  }
-  gotoProduct() {
-    this.router.navigate(['/Jumbo'])
-  }
+  // gotoProduct() {
+  //   this.router.navigate(['/Jumbo'])
+  // }
 }

@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainComponent } from './main/main.component';
+// import { MainComponent } from './main/main.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { JumboComponent } from './jumbo/jumbo.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
@@ -15,11 +15,15 @@ import { SettingComponent } from './setting/setting.component';
 import { AboutComponent } from './about/about.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
+import { CommonModule } from '@angular/common';
+import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
+    // MainComponent,
     AddProductComponent,
     JumboComponent,
     CreateaccountComponent,
@@ -28,11 +32,15 @@ import { HelpComponent } from './help/help.component';
     AboutComponent,
     PrivacyComponent,
     HelpComponent,
+    CartComponent,
+    OrderComponent,
+    WishlistComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    CommonModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],

@@ -1,70 +1,80 @@
 import { Component, OnInit } from '@angular/core';
 import { EmailValidator, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-
+import * as bootstrap from 'bootstrap';
+import { CommonModule } from '@angular/common';
+// import { Status } from '../status.enum';
+import { Status } from '../core/enums';
+import { Wishlist } from '../core/enums';
 import { FirestoreService } from '../services/firestore.service';
-
-
-
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-  loginForm: FormGroup;
-  employeeDetails$!: Observable<any[]>;
-  editingProduct: any;
-  params: any;
-  userEmail: any;
-  constructor(private router: Router, private fs: FirestoreService, private route: ActivatedRoute) {
-    this.loginForm = new FormGroup({
-      firstname: new FormControl('', Validators.required),
-      lastname: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.email),
-      phoneno: new FormControl('', Validators.required),
-      address: new FormControl('', Validators.required),
-      city: new FormControl('', Validators.required),
-      state: new FormControl('', Validators.required),
-
-    })
+  products$: Observable<any[]> | undefined;
+  viewProducts: any;
+  addedCart: any;
+  view: any;
+  wishlist: any;
+  viewWishlist: any;
+  views: any[] = [];
+  cartCount: any;
+  count = 0;
+  constructor(private fs: FirestoreService, private router: Router) {
+    this.products$ = this.fs.col$(`Product`).pipe(tap(data => {
+      this.cartCount = data;
+      console.log(this.cartCount)
+      return data;
+    }));
   }
-
   ngOnInit() {
-    this.employeeDetails$ = this.fs.col$(`Login`);
-    this.route.params.subscribe(params => {
-      this.userEmail = params['email'];
-      this.userEmail = params['firstname'];
-      this.userEmail = params['lastname'];
-
-
-      this.loginForm.patchValue({
-        email: this.userEmail,
-        firstname:this.userEmail,
-        lastname:this.userEmail
+  }
+  viewProduct(product: any) {
+    this.viewProducts = product;
+    this.view = new bootstrap.Modal(<any>document.getElementById('addProduct'));
+    this.view.show();
+  }
+  async addtoCart() {
+    if (this.viewProducts.status === Status.InCart) {
+      this.addedCart = 'Its already added in cart';
+    } else {
+      await this.fs.update(`Product/${this.viewProducts._id}`, {
+        status: Status.InCart
       });
+      window.location.reload();
+      this.view.hide();
+    }
+  }
+  hideEnableCart() {
+    this.addedCart = null;
+  }
+  addToWishlist(product: any) {
+    this.viewWishlist = product;
+    this.wishlist = new bootstrap.Modal(<any>document.getElementById('viewCart'));
+    this.wishlist.show();
+  }
+  async addingLikes() {
+    await this.fs.update(`Product/${this.viewWishlist._id}`, {
+      wishlist: Wishlist.Like
     })
-    
+    this.wishlist.hide();
+    // window.location.reload();
   }
-
-  // async saveProduct() {
-  //   await this.fs.update(this.editingProduct.ref.path, {
-  //     email: this.loginForm.controls.email.value,
-
-
-  //   });
-
-  // }
-
-  gotoJumbo() {
-    this.router.navigate(['/Jumbo'])
+  async addingDislikes() {
+    await this.fs.update(`Product/${this.viewWishlist._id}`, {
+      wishlist: Wishlist.DisLike
+    })
+    this.wishlist.hide();
+    // window.location.reload();
   }
-
-  addUser() {
-    $('#addModal').modal('show');
+  gotoCart() {
+    this.router.navigate(['/cart'])
   }
-  gotoSetting() {
-    this.router.navigate(['/setting'])
+  gotoWishlist() {
+    this.router.navigate(['/wishlist']);
   }
 }
