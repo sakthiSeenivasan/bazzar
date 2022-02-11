@@ -33,7 +33,7 @@ const routes: Routes = [
   {path:'order',component:OrderComponent},
   {path:'',component:OrderComponent},
   {path:'wishlist',component:WishlistComponent},
-  {path:'',component:WishlistComponent}
+  {path:'',component:WishlistComponent},
 
 ];
 

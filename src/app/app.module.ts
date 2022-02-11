@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { ElectroncisComponent } from './electroncis/electroncis.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     CartComponent,
     OrderComponent,
     WishlistComponent,
+    ElectroncisComponent,
   ],
   imports: [
     BrowserModule,

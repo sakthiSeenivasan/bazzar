@@ -9,13 +9,14 @@ import { Wishlist } from '../core/enums';
 import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import {BasePage} from '../core/base.page';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
-  products$: Observable<any[]> | undefined;
+export class ProductComponent extends BasePage implements OnInit {
+  products$: Observable<any> | undefined;
   viewProducts: any;
   addedCart: any;
   view: any;
@@ -24,7 +25,10 @@ export class ProductComponent implements OnInit {
   views: any[] = [];
   cartCount: any;
   count = 0;
+  check:any;
+  
   constructor(private fs: FirestoreService, private router: Router) {
+    super();
     this.products$ = this.fs.col$(`Product`).pipe(tap(data => {
       this.cartCount = data;
       console.log(this.cartCount)
@@ -46,7 +50,7 @@ export class ProductComponent implements OnInit {
       await this.fs.update(`Product/${this.viewProducts._id}`, {
         status: Status.InCart
       });
-      window.location.reload();
+      // window.location.reload();
       this.view.hide();
     }
   }
@@ -58,8 +62,8 @@ export class ProductComponent implements OnInit {
     this.wishlist = new bootstrap.Modal(<any>document.getElementById('viewCart'));
     this.wishlist.show();
   }
-  async addingLikes() {
-    await this.fs.update(`Product/${this.viewWishlist._id}`, {
+   async addingLikes() {
+   await this.fs.update(`Product/${this.viewWishlist._id}`, {
       wishlist: Wishlist.Like
     })
     this.wishlist.hide();
@@ -78,4 +82,9 @@ export class ProductComponent implements OnInit {
   gotoWishlist() {
     this.router.navigate(['/wishlist']);
   }
+ filterProducts(){
+   this.check = new bootstrap.Dropdown(<any>document.getElementById('filter'));
+   this.check.show();
+  }
+  // this.check.hide();
 }
