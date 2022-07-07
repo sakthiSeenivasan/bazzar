@@ -10,6 +10,7 @@ import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import {BasePage} from '../core/base.page';
+import * as phoneLib from 'google-libphonenumber';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -33,6 +34,12 @@ export class ProductComponent extends BasePage implements OnInit {
       this.cartCount = data;
       console.log(this.cartCount)
       return data;
+      // const number = phoneLib.parseAndKeepRawInput('202-456-1414', 'US');
+      // console.log(number.getCountryCode());
+      // phoneUtil.isValidNumberForRegion(phoneUtil.parse('202-456-1414', 'US'), 'US');
+      const phoneLibInstance = phoneLib.PhoneNumberUtil.getInstance();
+        const phoneNumber = phoneLibInstance.parse('');
+        const isValidNumber = phoneLibInstance.isValidNumber(phoneNumber);
     }));
   }
   ngOnInit() {
@@ -87,4 +94,8 @@ export class ProductComponent extends BasePage implements OnInit {
    this.check.show();
   }
   // this.check.hide();
+}
+
+function value(value: any) {
+  throw new Error('Function not implemented.');
 }

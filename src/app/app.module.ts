@@ -20,6 +20,7 @@ import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ElectroncisComponent } from './electroncis/electroncis.component';
+import * as phoneLib from 'google-libphonenumber';
 
 @NgModule({
   declarations: [

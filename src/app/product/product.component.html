@@ -46,19 +46,19 @@
                                 <button class="btn d-flex" style="margin-left: auto;">
                                     <span>
                                         <img src="../../assets/svg/hand-thumbs-up.svg"
-                                            *ngIf="product?.wishlist != 'Liked' && product?.wishlist != 'DisLiked'"
-                                            alt="" (click)="addToWishlist(product)">
+                                        *ngIf="product?.wishlist != 'Liked' && product?.wishlist != 'DisLiked'"
+                                        alt="" (click)="addToWishlist(product)">
                                     </span>
-
+                                    
                                     <span>
                                         <img src="../../assets/svg/hand-thumbs-up-fill.svg"
-                                            *ngIf="product?.wishlist == 'Liked'" alt=""
-                                            (click)="addToWishlist(product)">
+                                        *ngIf="product?.wishlist == 'Liked'" alt=""
+                                        (click)="addToWishlist(product)">
                                     </span>
                                     <span>
                                         <img src="../../assets/svg/hand-thumbs-down-fill.svg"
-                                            *ngIf="product?.wishlist == 'DisLiked'" alt=""
-                                            (click)="addToWishlist(product)">
+                                        *ngIf="product?.wishlist == 'DisLiked'" alt=""
+                                        (click)="addToWishlist(product)">
                                     </span>
                                 </button>
                             </div>
@@ -66,20 +66,35 @@
                                 <button class="btn ">
                                     <span>
                                         <img src="../../assets/svg/hand-thumbs-down.svg"
-                                            *ngIf="product?.wishlist != 'Liked'" alt=""
-                                            (click)="addToWishlist(product)">
+                                        *ngIf="product?.wishlist != 'Liked'" alt=""
+                                        (click)="addToWishlist(product)">
                                     </span>
-
+                                    
                                     <span>
                                         <img src="../../assets/svg/hand-thumbs-down-fill.svg"
-                                            *ngIf="product?.wishlist == 'Liked'" alt="">
+                                        *ngIf="product?.wishlist == 'Liked'" alt="">
                                     </span>
                                 </button>
                             </div> -->
-
+                            
                         </div>
                     </div>
                 </div>
+                <div class="card-footer w-100 bg-white">
+                    <div class="row">
+                        <div class="col-10">
+
+                            <input type="text" class="form-control border-0" style=" box-shadow: none;" placeholder="Type a message">
+                        </div>
+                        <div class="col-2">
+                            <span>
+                                <img src="../../assets/svg/send.svg"  alt="">
+                            </span>
+                        </div>
+                         
+                    </div>
+
+                  </div>
             </div>
         </div>
     </div>
